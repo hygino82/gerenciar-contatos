@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.contacts.mylist.dto.ContactDTO;
 import com.contacts.mylist.service.ContactService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/contacts")
@@ -48,14 +49,24 @@ public class ContactController {
 	public List<ContactDTO> findAllContactsByLastName(@PathParam(value = "lastName") String lastName) {
 		return contactService.findAllContactsByLastName(lastName);
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public void deleteUserById(@PathVariable long id) {
 		contactService.deleteUserById(id);
 	}
-	
+
 	@PutMapping
 	public ContactDTO updateContact(@RequestBody ContactDTO contactDTO) {
 		return contactService.updateContact(contactDTO);
+	}
+
+	@GetMapping("/email")
+	public List<ContactDTO> findAllByEmail(@RequestParam String email) {
+		return contactService.findAllByEmail(email);
+	}
+
+	@GetMapping("/phone/{phone}")
+	public ContactDTO findByPhoneNumber(@PathVariable("phone") String phone) {
+		return contactService.findByPhoneNumber(phone);
 	}
 }

@@ -19,4 +19,8 @@ public interface ContactService {
 	void deleteUserById(long id);
 
     ContactDTO updateContact(ContactDTO contactDTO);
+
+    List<ContactDTO> findAllByEmail(String email);
+
+    ContactDTO findByPhoneNumber(String phone);
 }

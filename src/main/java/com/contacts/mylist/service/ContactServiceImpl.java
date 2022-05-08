@@ -89,4 +89,20 @@ public class ContactServiceImpl implements ContactService {
 
         return mapper.map(newContact, ContactDTO.class);
     }
+
+    @Override
+    public List<ContactDTO> findAllByEmail(String email) {
+        List<Contact> contactList = contactRepository.findAllByEmailContainsIgnoreCase(email);
+        List<ContactDTO> contactListDTO = new ArrayList<>();
+
+        contactList.forEach(contact -> contactListDTO.add(mapper.map(contact, ContactDTO.class)));
+        return contactListDTO;
+    }
+
+    @Override
+    public ContactDTO findByPhoneNumber(String phone) {
+        Contact contact = contactRepository.findByPhoneNumber(phone);
+        
+        return mapper.map(contact, ContactDTO.class);
+    }
 }
