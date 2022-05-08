@@ -40,4 +40,11 @@ public class ContactServiceImpl implements ContactService {
 		return mapper.map(contact, ContactDTO.class);
 	}
 
+	@Override
+	public ContactDTO findContactById(long id) {
+		var contact = contactRepository.findById(id);
+
+		return mapper.map(contact, ContactDTO.class);
+	}
+
 }

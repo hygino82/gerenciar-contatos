@@ -10,4 +10,6 @@ public interface ContactService {
 
 	ContactDTO addContact(ContactDTO contactDTO);
 
+	ContactDTO findContactById(long id);
+
 }
