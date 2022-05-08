@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.contacts.mylist.dto.ContactDTO;
+import com.contacts.mylist.entity.Contact;
 import com.contacts.mylist.repository.ContactRepository;
 
 @Service
@@ -28,6 +29,15 @@ public class ContactServiceImpl implements ContactService {
 		contactList.forEach(contact -> contactListDTO.add(mapper.map(contact, ContactDTO.class)));
 
 		return contactListDTO;
+	}
+
+	@Override
+	public ContactDTO addContact(ContactDTO contactDTO) {
+		Contact contact = mapper.map(contactDTO, Contact.class);
+
+		contactRepository.save(contact);
+
+		return mapper.map(contact, ContactDTO.class);
 	}
 
 }

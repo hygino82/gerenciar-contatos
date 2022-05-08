@@ -8,4 +8,6 @@ public interface ContactService {
 
 	List<ContactDTO> findAllContacts();
 
+	ContactDTO addContact(ContactDTO contactDTO);
+
 }
