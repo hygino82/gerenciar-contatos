@@ -47,4 +47,22 @@ public class ContactServiceImpl implements ContactService {
 		return mapper.map(contact, ContactDTO.class);
 	}
 
+	@Override
+	public List<ContactDTO> findAllContactsByFirstName(String firstName) {
+		List<Contact> contactList = contactRepository.findAllByFirstNameContainsIgnoreCase(firstName);
+		List<ContactDTO> contactListDTO = new ArrayList<>();
+
+		contactList.forEach(contact -> contactListDTO.add(mapper.map(contact, ContactDTO.class)));
+		return contactListDTO;
+	}
+
+	@Override
+	public List<ContactDTO> findAllContactsByLastName(String lastName) {
+		List<Contact> contactList = contactRepository.findAllByLastNameContainsIgnoreCase(lastName);
+		List<ContactDTO> contactListDTO = new ArrayList<>();
+
+		contactList.forEach(contact -> contactListDTO.add(mapper.map(contact, ContactDTO.class)));
+		return contactListDTO;
+	}
+
 }
