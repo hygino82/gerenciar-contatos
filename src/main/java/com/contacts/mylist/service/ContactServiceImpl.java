@@ -65,4 +65,14 @@ public class ContactServiceImpl implements ContactService {
 		return contactListDTO;
 	}
 
+	@Override
+	public void deleteUserById(long id) {
+		var contact = contactRepository.findById(id);
+
+		if (contact.isPresent()) {
+			contactRepository.delete(contact.get());
+		}
+
+	}
+
 }

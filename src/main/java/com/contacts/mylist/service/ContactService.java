@@ -13,6 +13,9 @@ public interface ContactService {
 	ContactDTO findContactById(long id);
 
 	List<ContactDTO> findAllContactsByFirstName(String firstName);
+	
 	List<ContactDTO> findAllContactsByLastName(String lastName);
+
+	void deleteUserById(long id);
 
 }

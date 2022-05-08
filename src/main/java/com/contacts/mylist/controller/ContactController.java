@@ -5,6 +5,7 @@ import java.util.List;
 import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,5 +46,10 @@ public class ContactController {
 	@GetMapping("/lastname")
 	public List<ContactDTO> findAllContactsByLastName(@PathParam(value = "lastName") String lastName) {
 		return contactService.findAllContactsByLastName(lastName);
+	}
+	
+	@DeleteMapping("/{id}")
+	public void deleteUserById(@PathVariable long id) {
+		contactService.deleteUserById(id);
 	}
 }
