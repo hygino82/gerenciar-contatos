@@ -14,65 +14,79 @@ import com.contacts.mylist.repository.ContactRepository;
 @Service
 public class ContactServiceImpl implements ContactService {
 
-	@Autowired
-	private ModelMapper mapper;
+    @Autowired
+    private ModelMapper mapper;
 
-	@Autowired
-	private ContactRepository contactRepository;
+    @Autowired
+    private ContactRepository contactRepository;
 
-	@Override
-	public List<ContactDTO> findAllContacts() {
+    @Override
+    public List<ContactDTO> findAllContacts() {
 
-		var contactList = contactRepository.findAll();
-		List<ContactDTO> contactListDTO = new ArrayList<>();
+        var contactList = contactRepository.findAll();
+        List<ContactDTO> contactListDTO = new ArrayList<>();
 
-		contactList.forEach(contact -> contactListDTO.add(mapper.map(contact, ContactDTO.class)));
+        contactList.forEach(contact -> contactListDTO.add(mapper.map(contact, ContactDTO.class)));
 
-		return contactListDTO;
-	}
+        return contactListDTO;
+    }
 
-	@Override
-	public ContactDTO addContact(ContactDTO contactDTO) {
-		Contact contact = mapper.map(contactDTO, Contact.class);
+    @Override
+    public ContactDTO addContact(ContactDTO contactDTO) {
+        Contact contact = mapper.map(contactDTO, Contact.class);
 
-		contactRepository.save(contact);
+        contactRepository.save(contact);
 
-		return mapper.map(contact, ContactDTO.class);
-	}
+        return mapper.map(contact, ContactDTO.class);
+    }
 
-	@Override
-	public ContactDTO findContactById(long id) {
-		var contact = contactRepository.findById(id);
+    @Override
+    public ContactDTO findContactById(long id) {
+        var contact = contactRepository.findById(id);
 
-		return mapper.map(contact, ContactDTO.class);
-	}
+        return mapper.map(contact, ContactDTO.class);
+    }
 
-	@Override
-	public List<ContactDTO> findAllContactsByFirstName(String firstName) {
-		List<Contact> contactList = contactRepository.findAllByFirstNameContainsIgnoreCase(firstName);
-		List<ContactDTO> contactListDTO = new ArrayList<>();
+    @Override
+    public List<ContactDTO> findAllContactsByFirstName(String firstName) {
+        List<Contact> contactList = contactRepository.findAllByFirstNameContainsIgnoreCase(firstName);
+        List<ContactDTO> contactListDTO = new ArrayList<>();
 
-		contactList.forEach(contact -> contactListDTO.add(mapper.map(contact, ContactDTO.class)));
-		return contactListDTO;
-	}
+        contactList.forEach(contact -> contactListDTO.add(mapper.map(contact, ContactDTO.class)));
+        return contactListDTO;
+    }
 
-	@Override
-	public List<ContactDTO> findAllContactsByLastName(String lastName) {
-		List<Contact> contactList = contactRepository.findAllByLastNameContainsIgnoreCase(lastName);
-		List<ContactDTO> contactListDTO = new ArrayList<>();
+    @Override
+    public List<ContactDTO> findAllContactsByLastName(String lastName) {
+        List<Contact> contactList = contactRepository.findAllByLastNameContainsIgnoreCase(lastName);
+        List<ContactDTO> contactListDTO = new ArrayList<>();
 
-		contactList.forEach(contact -> contactListDTO.add(mapper.map(contact, ContactDTO.class)));
-		return contactListDTO;
-	}
+        contactList.forEach(contact -> contactListDTO.add(mapper.map(contact, ContactDTO.class)));
+        return contactListDTO;
+    }
 
-	@Override
-	public void deleteUserById(long id) {
-		var contact = contactRepository.findById(id);
+    @Override
+    public void deleteUserById(long id) {
+        var contact = contactRepository.findById(id);
 
-		if (contact.isPresent()) {
-			contactRepository.delete(contact.get());
-		}
+        if (contact.isPresent()) {
+            contactRepository.delete(contact.get());
+        }
+    }
 
-	}
+    @Override
+    public ContactDTO updateContact(ContactDTO contactDTO) {
+        long id = contactDTO.getId();
+        var oldContact = contactRepository.findById(id);
 
+        if (!oldContact.isPresent()) {
+            return null;
+        }
+
+        Contact newContact = new Contact();
+        newContact = mapper.map(contactDTO, Contact.class);
+        contactRepository.save(newContact);
+
+        return mapper.map(newContact, ContactDTO.class);
+    }
 }
